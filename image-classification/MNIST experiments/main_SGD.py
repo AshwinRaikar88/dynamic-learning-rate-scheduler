@@ -196,7 +196,7 @@ def main():
     
     if args.save_model:
         torch.save(model.state_dict(), "mnist_cnn.pt")
-    print("Total time is {}, training time is {}", end-begin, latency_train)
+    print(f"Total time is {end-begin}, training time is {latency_train}")
 
 
 if __name__ == '__main__':
