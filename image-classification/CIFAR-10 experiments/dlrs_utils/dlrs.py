@@ -14,7 +14,7 @@ class DLRS:
 
     def step(self, lr, loss_metrics):
         # Get the order of the learning rate
-        order_lr = np.math.floor(np.math.log10(lr))  
+        order_lr = np.floor(np.log10(lr))  
         # print(f"Old lr = {lr}, lr order = {order_lr}")
         
         # Calculate mean of a batch of loss values
@@ -29,12 +29,12 @@ class DLRS:
 
         if Norm > 2:
             # This means the loss increased so decrease the lr          
-            Norm *= self.del_d * np.math.pow(10, order_lr)
+            Norm *= self.del_d * np.pow(10, order_lr)
         elif Norm > 1e-8: # this means, if Norm is > 0
-            Norm *= -2 * np.math.pow(10, order_lr)
+            Norm *= -2 * np.pow(10, order_lr)
         else:
             # This means the loss is decreasing so gradually increase the lr
-            Norm *= self.del_i * np.math.pow(10, order_lr)
+            Norm *= self.del_i * np.pow(10, order_lr)
 
         # update learning rate
         lr -= Norm
@@ -49,6 +49,6 @@ class DLRS:
             lr = self.lr_upper_threshold
             # print(f"DLRS [info]: Upper limit reached, lr = {lr}")
         
-        # order_lr = np.math.floor(np.math.log10(lr))
+        # order_lr = np.floor(np.log10(lr))
         # print(f"DLRS [info]: New lr = {lr}, lr order = {order_lr}")
         return lr

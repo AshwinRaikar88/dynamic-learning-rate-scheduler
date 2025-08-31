@@ -8,12 +8,11 @@ import torch.optim as optim
 from torchvision import datasets, transforms
 from torch.optim.lr_scheduler import StepLR
 import time
-# import visdom
-# vis = visdom.Visdom(env='adaptive_lr')
-# win = vis.line(X=[0.], Y=[0.], win='train_loss_ada', opts={'title':'adadelta'})
 import os
 import numpy as np
+
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
@@ -68,12 +67,7 @@ def train(args, model, device, train_loader, optimizer, epoch):
         if batch_idx % args.log_interval == 0:
             print(f'Train Epoch: {epoch} \
                   [{batch_idx * len(data)}/{len(train_loader.dataset)} ({100. * batch_idx / len(train_loader):.0f}%)]\t Loss: {loss.item():.6f} Loss Diff: {loss_diff:.3f}')
-            
-            # vis.line([loss.item()], [(epoch - 1)*len(train_loader) + batch_idx],
-            #          win='train_loss_adadelta',
-            #          opts={'title':'adadelta'},
-            #          update= None if (epoch - 1)*len(train_loader) + batch_idx == 0 else 'append')
-            # train_loss.append(loss.item())
+                        
             if args.dry_run:
                 break
     # return train_loss
@@ -154,8 +148,7 @@ def main():
     # optimizer = optim.Adadelta(model.parameters(), lr=args.lr)
 
     scheduler = StepLR(optimizer, step_size=1, gamma=args.gamma)
-
-    # train_log_dir = f'logs_base/SGD/batchsize_{args.batch_size}/lr_{args.lr}/train'
+    
     train_log_dir = f'logs_exp_2/SGD/batchsize_{args.batch_size}/lr_{args.lr}/train'
     writer = SummaryWriter(log_dir=train_log_dir)
     print(f"Initialized Tensorboard logs at {train_log_dir}")
@@ -187,9 +180,9 @@ def main():
         test_acc.append(b)
         writer.add_scalar("Accuracy/test", test_acc[-1], epoch)
         
-
         # scheduler.step()
     end = time.perf_counter()
+
     with open('./results_exp.txt', 'a+') as fl:
         fl.write(
             f'\nOptimizer: SGD,\n\
@@ -200,11 +193,11 @@ def main():
                 test loss: {test_loss}\n\
                 test acc: {test_acc}\n\
                 total time: {end - begin}\n\n----------------')
+    
     if args.save_model:
         torch.save(model.state_dict(), "mnist_cnn.pt")
     print("Total time is {}, training time is {}", end-begin, latency_train)
 
+
 if __name__ == '__main__':
     main()
-
-

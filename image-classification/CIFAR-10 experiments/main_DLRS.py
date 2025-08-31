@@ -115,9 +115,7 @@ def train(epoch, lr, optimizer):
         if batch_idx % 20 == 0:
             print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
                 epoch, batch_idx * len(inputs), len(trainloader.dataset),
-                100. * batch_idx / len(trainloader), loss.item()))
-        # progress_bar(batch_idx, len(trainloader), 'Loss: %.3f | Acc: %.3f%% (%d/%d)'
-        #              % (train_loss/(batch_idx+1), 100.*correct/total, correct, total))
+                100. * batch_idx / len(trainloader), loss.item()))        
         loss_metrics.append(loss.item())
     return lr, loss_metrics
 

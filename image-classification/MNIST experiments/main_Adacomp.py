@@ -11,8 +11,6 @@ import numpy as np
 from torch.optim.lr_scheduler import StepLR
 import numpy as np
 from metrics import ConfusionMatrix
-# import visdom
-# vis = visdom.Visdom(env='adaptive_lr')
 
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
@@ -88,11 +86,7 @@ def train(args, model, device, optimizer, train_loader, epoch, lr, losses_neib, 
             loss_diff = 0.
             print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
                 epoch, batch_idx * len(data), len(train_loader.dataset),
-                100. * batch_idx / len(train_loader), loss.item()))
-            # vis.line([loss.item()], [(epoch - 1)*len(train_loader) + batch_idx],
-            #          win='train_loss_compenlr',
-            #          opts={'title':'compen','legend':['loss']},
-            #          update= None if (epoch - 1)*len(train_loader) + batch_idx == 0 else 'append')
+                100. * batch_idx / len(train_loader), loss.item()))            
             if args.dry_run:
                 break
     return lr, losses_neib, lr_list, loss_metrics
@@ -108,19 +102,11 @@ def train1(args, model, device, optimizer, train_loader, epoch):
         loss = F.nll_loss(output, target)
         loss_metrics.append(loss.cpu().detach().numpy())
         loss.backward()
-        # print(lr.data.item(), loss_diff.data.item(), grad_norm(model.parameters()))
-        # loss_diff = 0.
-        # lr = lr_adap(lr, loss_diff, grad_norm(model.parameters()))
-        # nn.utils.clip_grad_norm_(model.parameters(), 10)
         optimizer.step()
         if batch_idx % args.log_interval == 0:
             print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
                 epoch, batch_idx * len(data), len(train_loader.dataset),
-                100. * batch_idx / len(train_loader), loss.item()))
-            # vis.line([loss.item()], [(epoch - 1)*len(train_loader) + batch_idx],
-            #          win='train_loss_compenlr',
-            #          opts={'title':'compen','legend':['loss']},
-            #          update= None if (epoch - 1)*len(train_loader) + batch_idx == 0 else 'append')
+                100. * batch_idx / len(train_loader), loss.item()))            
             if args.dry_run:
                 break
         return loss_metrics
@@ -145,11 +131,6 @@ def test(model, device, test_loader, epoch, confusion):
     print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.2f}%)\n'.format(
         test_loss, correct, len(test_loader.dataset),
         100. * correct / len(test_loader.dataset)))
-    # vis.line([test_loss], [epoch],
-    #          win='test_loss_compenlr',
-    #          opts={'title': 'compen', 'legend': ['test_loss']},
-    #          update= 'append')
-    # return test_loss, 100. * correct / len(test_loader.dataset)
     return acc, precision, recall, f1_score
 
 

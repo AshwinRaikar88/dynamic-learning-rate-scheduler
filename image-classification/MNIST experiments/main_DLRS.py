@@ -9,9 +9,6 @@ from torchvision import datasets, transforms
 from torch.optim.lr_scheduler import StepLR
 import time
 import numpy as np
-# import visdom
-# vis = visdom.Visdom(env='adaptive_lr')
-# win = vis.line(X=[0.], Y=[0.], win='train_loss_ada', opts={'title':'adadelta'})
 import os
 
 from utils.dlrs import DLRS
@@ -76,12 +73,7 @@ def train(args, model, device, train_loader, optimizer, epoch, lr):
         if batch_idx % args.log_interval == 0:
             print(f'Train Epoch: {epoch} [{batch_idx * len(data)}/{len(train_loader.dataset)} \
                   ({100. * batch_idx / len(train_loader):.0f}%)]\tLoss: {loss.item():.6f}')
-            
-            # vis.line([loss.item()], [(epoch - 1)*len(train_loader) + batch_idx],
-            #          win='train_loss_adadelta',
-            #          opts={'title':'adadelta'},
-            #          update= None if (epoch - 1)*len(train_loader) + batch_idx == 0 else 'append')
-            # train_loss.append(loss.item())
+                        
             if args.dry_run:
                 break
     # return train_loss
@@ -171,9 +163,7 @@ def main():
     begin = time.perf_counter()
     latency_train = 0.
     lr = args.lr
-
-    # train_log_dir = f'logs_exp_3/DLRS/batchsize_{args.batch_size}/lr_{args.lr}/train'
-    # train_log_dir = f'mnist_logs/mnist/sgd/dlrs/lr_{args.lr}/train'
+    
     train_log_dir = f'mnist_logs/mnist/sgd/dlrs/batchsize_{args.batch_size}/train'
     writer = SummaryWriter(log_dir=train_log_dir)
     print(f"Initialized Tensorboard logs at {train_log_dir}")
