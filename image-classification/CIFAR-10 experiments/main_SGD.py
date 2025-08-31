@@ -171,7 +171,6 @@ lr = args.lr
 test_acc = []
 test_loss = []
 
-# train_log_dir = f'cifar_logs/cifar_10/sgd_dla/standard/lr_{args.lr}/train'
 train_log_dir = f'cifar_logs/cifar_10/sgd_dla/standard/bs_{args.batchsize}/train'
 writer = SummaryWriter(log_dir=train_log_dir)
 print(f"Initialized Tensorboard logs at {train_log_dir}")

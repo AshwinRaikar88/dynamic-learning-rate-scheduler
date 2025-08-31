@@ -164,7 +164,7 @@ del_d = args.deld
 scheduler = DLRS(0.9, 1e-4, del_i, del_d)
 
 lr = args.lr
-# train_log_dir = f'cifar_logs/cifar_10/sgd_dla/dlrs_i{del_i}_d{del_d}/lr_{args.lr}/train'
+
 train_log_dir = f'cifar_logs/cifar_10/adam_vgg19/dlrs_i{del_i}_d{del_d}/bs_{args.batchsize}/train'
 writer = SummaryWriter(log_dir=train_log_dir)
 print(f"Initialized Tensorboard logs at {train_log_dir}")
