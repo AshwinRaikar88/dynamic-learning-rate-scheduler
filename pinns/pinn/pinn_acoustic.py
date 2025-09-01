@@ -268,7 +268,7 @@ class PINN:
             # print(f"Learning rate: {self.lr}")
 
         # Save model after finishing training
-        self.model.save(f"./weights/{self.exp_name}-last")
+        self.model.save(f"./weights/{self.exp_name}-last.h5")
 
     def callback_early_stopping(self, epoch, loss, save_best_weights=False):
         if np.isnan(loss) or (loss.numpy() > 10000 * self.prev_loss and epoch > 100):
@@ -283,7 +283,7 @@ class PINN:
             self.best_loss = loss.numpy()
             try:
                 print(f"Saving best weights")
-                save_path = f"./weights/{self.exp_name}-{self.best_loss:.3f}"
+                save_path = f"./weights/{self.exp_name}-{self.best_loss:.3f}.h5"
                 self.model.save(save_path)
                 print(f"Weights saved in:{save_path}")
                 self.stop_training = True
