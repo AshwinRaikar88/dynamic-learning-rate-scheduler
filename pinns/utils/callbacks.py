@@ -18,7 +18,7 @@ class DLRS:
     def step(self, lr, loss_metrics):
         # Get the order of the learning rate
         order_lr = np.floor(np.log10(lr))
-        # order_lr = np.math.floor(np.math.log10(lr))
+        # order_lr = np.floor(np.log10(lr))
         # print(f"Old lr = {lr}, lr order = {order_lr}")
 
         # Calculate mean of a batch of loss values
@@ -30,12 +30,12 @@ class DLRS:
 
         if Norm > 2:  # this means, if Norm is > 0
             # This means the loss increased so decrease the lr
-            Norm *= self.del_d * np.math.pow(10, order_lr)
+            Norm *= self.del_d * np.pow(10, order_lr)
         elif Norm > 0:
-            Norm *= 1 * np.math.pow(10, order_lr)
+            Norm *= 1 * np.pow(10, order_lr)
         else:
             # This means the loss is decreasing so gradually increase the lr
-            Norm *= self.del_i * np.math.pow(10, order_lr)
+            Norm *= self.del_i * np.pow(10, order_lr)
 
         # update learning rate
         lr -= Norm
@@ -51,7 +51,7 @@ class DLRS:
             print(f"DLRS [info]: Upper limit reached, lr = {lr}")
             return round(lr, 8), True
         else:
-            # order_lr = np.math.floor(np.math.log10(lr))
+            # order_lr = np.floor(np.log10(lr))
             # print(f"DLRS [info]: New lr = {lr}, lr order = {order_lr}")
             return round(lr, 8), True
     
@@ -70,13 +70,13 @@ class DLRS:
 
         if Norm >= 1:  # this means, if Norm is > 0
             # Loss increase, Decrease Lr
-            Norm *= self.del_d * np.math.pow(10, order_lr)
+            Norm *= self.del_d * np.pow(10, order_lr)
         elif Norm < 0:
             # Loss decrease, Increase Lr
-            Norm *= self.del_i * np.math.pow(10, order_lr)
+            Norm *= self.del_i * np.pow(10, order_lr)
         else:
             # Between 0 to 1 loss is stagnating
-            Norm *= np.math.pow(10, order_lr)
+            Norm *= np.pow(10, order_lr)
 
         # update learning rate
         lr -= Norm
@@ -92,7 +92,7 @@ class DLRS:
             print(f"DLRS [info]: Upper limit reached, lr = {lr}")
             return round(lr, 8), True
         else:
-            # order_lr = np.math.floor(np.math.log10(lr))
+            # order_lr = np.floor(np.log10(lr))
             # print(f"DLRS [info]: New lr = {lr}, lr order = {order_lr}")
             return round(lr, 8), True
         
@@ -108,7 +108,7 @@ class DLRS:
         # Calculate the normalized slope - Observations
         Ld = (loss_metrics[-1] - loss_metrics[0]) / Lm
 
-        Norm = (Ld/Lm) * np.math.pow(10, order_lr)
+        Norm = (Ld/Lm) * np.pow(10, order_lr)
 
         # update learning rate
         lr -= Norm
@@ -124,6 +124,6 @@ class DLRS:
             print(f"DLRS [info]: Upper limit reached, lr = {lr}")
             return round(lr, 8), True
         else:
-            # order_lr = np.math.floor(np.math.log10(lr))
+            # order_lr = np.floor(np.log10(lr))
             # print(f"DLRS [info]: New lr = {lr}, lr order = {order_lr}")
             return round(lr, 8), True

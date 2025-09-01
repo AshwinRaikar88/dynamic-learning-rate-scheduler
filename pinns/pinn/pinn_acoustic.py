@@ -325,26 +325,26 @@ class PINN:
 
             try:
                 # this function gets the exponential index of a number
-                n = np.math.floor(np.math.log10(abs(Norm)))
+                n = np.floor(np.log10(abs(Norm)))
             except Exception as Ex:
                 print(Ex)
                 Norm = 1
-                n = np.math.floor(np.math.log10(abs(Norm)))
+                n = np.floor(np.log10(abs(Norm)))
 
             # Higher the magnitue less the impact
             if Norm >= 1:
                 # print(f"Norm = {Norm} Up, Learning rate= {self.lr}")
-                Norm *= np.math.pow(10, n - 4)  # n-2
+                Norm *= np.pow(10, n - 4)  # n-2
                 self.lr -= Norm
 
             elif Norm < 0:
                 # print(f"Norm = {Norm} Dn, Learning rate= {self.lr}")
-                Norm *= np.math.pow(10, n - 5)
+                Norm *= np.pow(10, n - 5)
                 self.lr -= Norm
 
             else:
                 # print(f"Norm = {Norm} Up, Learning rate= {self.lr}")
-                Norm *= np.math.pow(10, n - 3)  # n-2
+                Norm *= np.pow(10, n - 3)  # n-2
                 self.lr -= Norm
 
             self.lr = abs(self.lr)

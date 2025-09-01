@@ -42,14 +42,14 @@ class DLRS:
                 self.del_d += self.Norm
 
             # Loss increase, Decrease Lr
-            self.Norm *= self.del_d * np.math.pow(10, order_lr)
+            self.Norm *= self.del_d * np.pow(10, order_lr)
 
         else:
             if spikes:
                 # Decrease del_i: (Since Norm is -ve add it for efficieny) 
                 self.del_i += self.Norm
             # Loss decrease, Increase Lr
-            self.Norm *= self.del_i * np.math.pow(10, order_lr)
+            self.Norm *= self.del_i * np.pow(10, order_lr)
 
         # Update learning rate
         lr -= self.Norm
