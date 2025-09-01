@@ -1,0 +1,37 @@
+paths:
+  weights_dir: "./weights/dirichlet/"
+  output_images_path: './outputs/dirichlet/'
+  log_directory: './logs/dirichlet/'
+
+model:
+  name: 'simple_neural_network'
+  layers: [100, 100, 100]
+  pretrained_path: null
+
+# Training configuration
+train:
+  # Experiment name
+  exp_name: "experiment_1"
+  num_epochs: 10000
+  batch_size: 1000
+  numIntColPoints: 10000
+  lr: 0.005
+
+  optimizer: 'adam'
+  resume: False
+
+  # Show epoch details
+  epoch_verbose: 10
+  # Save images
+  output_verbose: 10
+
+# Physics variables
+physics:
+  f: 100
+  c: 340
+  x_lb: 0
+  x_rb: 1
+  p_lb: 1
+  p_rb: -1
+
+  boundary_type: 'dirichlet_boundary'

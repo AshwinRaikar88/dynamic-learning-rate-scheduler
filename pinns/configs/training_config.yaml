@@ -1,0 +1,52 @@
+paths:
+  model_save_path: "./weights/"
+  output_images_path: './outputs/'
+
+  tensorboard:
+    log_directory: './logs/'
+
+model:
+  model_name: 'gnn'
+
+  # 'simple', 'multi-output', 'complex-medium'
+  type: 'simple'
+
+# Training configuration
+train:
+  # Experiment name
+  exp_name: "default_name"
+  num_epochs: 10000
+  batch_size: 1000
+  numIntColPoints: 10000
+  lr: 0.005
+
+  optimizer: 'adam'
+  resume: False
+
+  # Show epoch details
+  epoch_verbose: 10
+  # Save images
+  output_verbose: 10
+
+# Physics variables
+physics:
+  # 'dirichlet_boundary', 'robin_boundary'
+  boundary_type: 'dirichlet_boundary'
+
+  dirichlet_boundary:
+    f: 100
+    c: 340
+    x_lb: 0
+    x_rb: 1
+    p_lb: 1
+    p_rb: -1
+
+  robin_boundary:
+    f: 100
+    c: 340
+    x_lb: 0
+    x_rb: 1
+    p_lb: 1
+    h: 4.0
+    c1: 1.0
+
