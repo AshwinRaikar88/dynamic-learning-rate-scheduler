@@ -1,0 +1,39 @@
+paths:
+  model_save_path: "./weights/"
+  output_images_path: './outputs/'
+
+  tensorboard:
+    log_directory: './logs/complex_medium'
+
+model:
+  class_name: 'complex'
+  layers: [100, 100, 100]
+
+# Training configuration
+train:
+  # Experiment name
+  exp_name: "default_name"
+  num_epochs: 10000
+  batch_size: 1000
+  numIntColPoints: 10000
+  lr: 0.005
+
+  optimizer: 'adam'
+  resume: False
+
+  # Show epoch details
+  epoch_verbose: 10
+  # Save images
+  output_verbose: 10
+
+# Physics variables
+physics:
+  f: 100
+  c: 340
+  cw: 100
+  x_lb: 0
+  x_rb: 1
+  p_lb: 1
+  p_rb: -1
+
+  boundary_type: 'complex_medium'
